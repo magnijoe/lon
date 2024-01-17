@@ -41,22 +41,76 @@
 
         <div class="container">
             <div class="content">
-                <div class="field flex-center">
+                <div class="field flex-center field-header">
                     <h1>Lønberegner</h1>
                     <button class="beta">Beta</button>
                 </div>
                 <form action="" class="lon-form">
                     <div class="row flex-center">
-                        <div class="field">
+                        <label for="Navn" class="field">
                             <input type="text" name="Name" id="inp-name" placeholder="Navn...">
-                        </div>
-                        <div class="field">
+                        </label>
+                        <label for="Løn" class="field" id="lon">
                             <input type="text" name="Name" id="inp-lon" placeholder="Løn...">
-                            <input type="checkbox" name="monthly" id="inp-monthly">
-                            <input type="checkbox" name="yearly" id="inp-yearly">
-                        </div>
+                            <div class="toggle-container">
+                                <div class="description-container flex-center">
+                                    <div class="description">/mnd</div>
+                                    <div class="description">/år</div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        
+                        </label>
+                        <label for="Pension" class="field" id="pension">
+                            <input type="text" name="pension" id="inp-pension" placeholder="Pension...">
+                            <span class="meta">%</span>
+                        </label>
+                        <label for="Bonus/provision" class="field" id="bonus">
+                            <input type="text" name="bonus" id="inp-lon" placeholder="Bonus/provision...">
+                            <div class="toggle-container">
+                                <div class="description-container flex-center">
+                                    <div class="description">/mnd</div>
+                                    <div class="description">/år</div>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="row flex-center">
+                        <label for="Fritvalgskonto" class="field">
+                            <input type="text" name="fritvalg" id="inp-fritvalg" placeholder="Fritvalgskonto...">
+                            <span class="meta">%</span>
+                        </label>
+                        <label for="Timer" class="field">
+                            <input type="text" name="timer" id="inp-hours" placeholder="Antal timer...">
+                            <span class="meta">/u</span>
+                        </label>
+                        <label class="field check-container">
+                            Betalt telefon
+                            <input type="checkbox" name="betalt-telefon" id="inp-phone-paid">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="field check-container">
+                            Betalt internet
+                            <input type="checkbox" name="betalt-internet" id="inp-internet-paid">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="field check-container">
+                            Betalt frokost
+                            <input type="checkbox" name="betalt-frokost" id="inp-internet-paid">
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
                 </form>
+
+        
             </div>
         </div>
     

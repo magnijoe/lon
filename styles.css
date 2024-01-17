@@ -23,6 +23,7 @@ body {
     font-family: 'Miriam Libre', sans-serif;
     padding: var(--largeGap);
     color: var(--textColor);
+    font-size: 14px;
 }
 
 a {
@@ -52,6 +53,70 @@ a {
     }
 }
 
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* background-color: rgba(36, 40, 47, .5); */
+    background-color: var(--boxBg);
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--textFaded);
+    -webkit-transition: .2s ease;
+    transition: .2s ease;
+    border-radius: 100%;
+  }
+  
+  input:checked + .slider {
+    background-color: var(--background);
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+  }
+
+  .toggle-container {
+    display: flex;
+    flex-direction: column;
+    .description {
+        font-size: 8px;
+        color: var(--textFaded);
+      }
+
+  }
+
+
 
 header {
     justify-content: space-between;
@@ -72,11 +137,82 @@ header {
     }
 }
 
+/* Customize the label (the container) */
+.check-container {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding-right: 48px!important;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .check-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    color: var(--textFaded);
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 32px;
+    width: 32px;
+    border-radius: var(--borderRadius);
+    background-color: var(--boxBg);
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .check-container:hover input ~ .checkmark {
+    /* background-color: var(--background); */
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .check-container input:checked ~ .checkmark {
+    /* background-color: #2196F3; */
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .check-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .check-container .checkmark:after {
+    left: 12px;
+    top: 8px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
 .container {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .field-header {
+        height: 70px!important;
+    }
 
     .content {
         width: 80%;
@@ -95,15 +231,37 @@ header {
             display: flex;
             align-items: center;
             gap: var(--gap);
+            position: relative;
+            height: 50px;
+            width: 100%;
+        }
+
+        .meta {
+            position: absolute;
+            right: 8px;
+            font-weight: var(--bold);
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 27px;
+            background-color: var(--boxBg);
+            user-select: none;
         }
 
         .lon-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--gap);
 
             input {
                 padding: var(--gap);
                 border-radius: 8px;
                 border: none;
                 background: var(--boxBg);
+                color: white;
+                text-wrap: nowrap;
+                width: 100%;
 
                 &:focus {
                     outline: none;
@@ -114,6 +272,23 @@ header {
                     color: var(--textColor);
                 }
 
+            }
+
+            #lon {
+                width: auto;
+
+                #inp-lon {
+                    width: 88px;
+                }
+
+            }
+
+            #pension {
+                width: auto;
+
+                #inp-pension {
+                    width: 110px;
+                }
             }
         }
     }
