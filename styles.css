@@ -12,9 +12,13 @@
     --borderRadius: 12px;
   }
 
+body,html {
+    margin: 0;
+    padding: 0;
+}
+
 * {
     box-sizing: border-box;
-    font-family: 'Miriam Libre', sans-serif;
 }
 
 
@@ -24,6 +28,9 @@ body {
     padding: var(--largeGap);
     color: var(--textColor);
     font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
 }
 
 a {
@@ -145,6 +152,7 @@ header {
     -ms-user-select: none;
     user-select: none;
     padding-right: 48px!important;
+    position: relative;
   }
   
   /* Hide the browser's default checkbox */
@@ -209,6 +217,8 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 32px;
 
     .field-header {
         height: 70px!important;
@@ -216,7 +226,7 @@ header {
 
     .content {
         width: 80%;
-        max-width: 800px;
+        max-width: 900px;
         padding: var(--largeGap);
         background: var(--boxBg);
         border-radius: var(--borderRadius);
@@ -292,5 +302,65 @@ header {
             }
         }
     }
+
+}
+
+.jobs-grid {
+  display: grid;
+  grid-template-columns: [Del] 30px [Job] 135px [Pension] 60px [Bonus] 60px [Frit] 60px [Hours] 60px [Phone] 60px [Internet] 60px [Lunch] 60px [Pay] 140px [Gross] 1fr;
+  padding: var(--gap);
+
+  .checkmark {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+
+    &::after {
+      left: 9px;
+      top: 6px;
+      width: 4px;
+      height: 8px;
+      border-width: 0 2px 2px 0;; 
+    }
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .right {
+    text-align: right;
+  }
+
+  .pay {
+    margin-left: 16px;
+  }
+
+}
+
+.jobs-grid-header {
+  color: var(--textFaded);
+  opacity: .5;
+  text-transform: uppercase;
+  font-size: 11px;
+  padding: 0 var(--gap) 0 var(--gap);
+}
+
+.jobs-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+
+  .jobs-container {
+    background-color: var(--box);
+    border-radius: var(--borderRadius);
+    height: 40px;
+    align-items: center;
+  
+    .pay-gross {
+      font-weight: var(--bold);
+    }
+  
+  }
 
 }
