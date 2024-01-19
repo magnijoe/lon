@@ -307,8 +307,9 @@ header {
 
 .jobs-grid {
   display: grid;
-  grid-template-columns: [Del] 30px [Job] 135px [Pension] 60px [Bonus] 60px [Frit] 60px [Hours] 60px [Phone] 60px [Internet] 60px [Lunch] 60px [Pay] 140px [Gross] 1fr;
+  grid-template-columns: [Del] 12px [Job] 135px [Pension] 60px [Bonus] 60px [Frit] 60px [Hours] 60px [Phone] 60px [Internet] 60px [Lunch] 60px [Pay] 140px [Gross] 1fr;
   padding: var(--gap);
+  gap: var(--gap);
 
   .checkmark {
     width: 24px;
@@ -356,9 +357,19 @@ header {
     border-radius: var(--borderRadius);
     height: 40px;
     align-items: center;
+
+    .close-button {
+      opacity: .35;
+      cursor: pointer;
+      justify-content: center;
+    }
   
     .pay-gross {
       font-weight: var(--bold);
+    }
+
+    .check-container {
+      cursor: default;
     }
   
   }

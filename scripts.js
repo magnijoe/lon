@@ -21,10 +21,9 @@ jobForm.onsubmit = function(event){
     bonus = document.getElementById("inp-bonus").value
     fritvalg = document.getElementById("inp-fritvalg").value
     hours = document.getElementById("inp-hours").value
-    // phone = document.getElementById("inp-phone-paid").checked
-    phone = true
-    internet = true
-    lunch = false
+    phone = document.getElementById("inp-phone-paid").checked
+    internet = document.getElementById("inp-internet-paid").checked
+    lunch = document.getElementById("inp-lunch-paid").checked
 
     newjob = new job(jobName, pay, pension, bonus, fritvalg, hours, phone, internet, lunch)
     jobsArray.push(newjob)
@@ -32,8 +31,8 @@ jobForm.onsubmit = function(event){
     updatejobs();
 }
 
-let job1 = new job("Nordicals", "33.000", "5%", "0%", "0%", "37", true, false, true);
-let job2 = new job("HLTV", "42.000", "5%", "10%", "0%", "37,5", true, true, true);
+let job1 = new job("Nordicals", 33000, 5, 10000, 5, "37", true, false, true);
+let job2 = new job("HLTV", 42000, 5, 10, 0, "37,5", false, true, false);
 
 
 let jobsArray = [job1, job2];
@@ -56,8 +55,13 @@ function updatejobs() {
 
     // Create elements for job details and append to the jobDiv
 
-    let removeButton = document.createElement("button");
-        removeButton.textContent = "X";
+    let removeButton = document.createElement("div");
+        removeButton.classList.add("close-button")
+        removeButton.classList.add("flex-center")
+
+        removeButton.innerHTML = `
+            <i class="fa-solid fa-xmark"></i>
+        `;
         removeButton.addEventListener("click", function() {
             // Remove the job from the array
             jobsArray.splice(index, 1);
@@ -92,21 +96,82 @@ function updatejobs() {
     hoursDiv.textContent = job.hours;
     jobDiv.appendChild(hoursDiv);
 
-    // phone, internet, lunch placeholders
-    let emptyDiv1 = document.createElement("div");
-    let emptyDiv2 = document.createElement("div");
-    let emptyDiv3 = document.createElement("div");
+    checkmark = `
+        <label class="check-container">
+            <input type="checkbox" disabled>
+            <span class="checkmark" ></span>
+        </label>
+    `;
 
-    jobDiv.appendChild(emptyDiv1);
-    jobDiv.appendChild(emptyDiv2);
-    jobDiv.appendChild(emptyDiv3);
+    checkmarkChecked = `
+        <label class="check-container">
+            <input type="checkbox" checked disabled>
+            <span class="checkmark" ></span>
+        </label>
+    `;
 
+    let phoneDiv = document.createElement("div")
+    phoneDiv.classList.add("phone")
+    phoneDiv.classList.add("center")
+    
+    if(job.phone){
+        phoneDiv.innerHTML = checkmarkChecked
+    } else {
+        phoneDiv.innerHTML = checkmark
+    }
+    jobDiv.appendChild(phoneDiv)
 
+    let internetDiv = document.createElement("div")
+    internetDiv.classList.add("internet")
+    internetDiv.classList.add("center")
+    
+    if(job.internet){
+        internetDiv.innerHTML = checkmarkChecked
+    } else {
+        internetDiv.innerHTML = checkmark
+    }
+    jobDiv.appendChild(internetDiv)
+
+    let lunchDiv = document.createElement("div")
+    lunchDiv.classList.add("internet")
+    lunchDiv.classList.add("center")
+    
+    if(job.lunch){
+        lunchDiv.innerHTML = checkmarkChecked
+    } else {
+        lunchDiv.innerHTML = checkmark
+    }
+    jobDiv.appendChild(lunchDiv)
 
     let payDiv = document.createElement("div");
     payDiv.classList.add("pay")
-    payDiv.textContent = job.pay;
+    payAnually = job.pay * 12
+    payDiv.textContent = payAnually.toLocaleString("da-DK");
     jobDiv.appendChild(payDiv);
+
+
+
+    let totalDiv = document.createElement("div");
+    totalDiv.classList.add("pay-gross");
+    totalDiv.classList.add("right");
+
+
+    let totalGross = 0
+
+    function getTotalGross() {
+        totalGross += job.pay * 12
+        totalGross += job.pay * 12 * job.pension / 100
+        totalGross += job.pay * 12 * job.fritvalg / 100
+        totalGross += job.bonus
+        return totalGross
+    }
+
+    console.log(getTotalGross());
+
+    totalDiv.textContent = totalGross.toLocaleString("da-DK")
+    jobDiv.appendChild(totalDiv)
+
+
 
 
 
