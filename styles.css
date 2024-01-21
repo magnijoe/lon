@@ -264,6 +264,18 @@ header {
             flex-direction: column;
             gap: var(--gap);
 
+            /* Chrome, Safari, Edge, Opera */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+              -webkit-appearance: none;
+              margin: 0;
+            }
+
+            /* Firefox */
+            input[type=number] {
+              -moz-appearance: textfield;
+            }
+
             input {
                 padding: var(--gap);
                 border-radius: 8px;
@@ -272,6 +284,7 @@ header {
                 color: white;
                 text-wrap: nowrap;
                 width: 100%;
+                font-family: "Miriam Libre", sans-serif;
 
                 &:focus {
                     outline: none;

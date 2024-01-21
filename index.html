@@ -52,10 +52,10 @@
                 <form action="" class="lon-form">
                     <div class="row flex-center">
                         <label for="Navn" class="field">
-                            <input type="text" name="Name" id="inp-name" placeholder="Navn...">
+                            <input required type="text" name="Name" id="inp-name" placeholder="Navn...">
                         </label>
                         <label for="Løn" class="field" id="lon">
-                            <input type="text" name="Name" id="inp-lon" placeholder="Løn...">
+                            <input required type="number" name="Løn" id="inp-lon" placeholder="Løn...">
                             <div class="toggle-container">
                                 <div class="description-container flex-center">
                                     <div class="description">/mnd</div>
@@ -69,18 +69,18 @@
                         
                         </label>
                         <label for="Pension" class="field" id="pension">
-                            <input type="text" name="pension" id="inp-pension" placeholder="Pension...">
+                            <input required type="number" name="pension" id="inp-pension" placeholder="Pension...">
                             <span class="meta">%</span>
                         </label>
                         <label for="Bonus/provision" class="field" id="bonus">
-                            <input type="text" name="bonus" id="inp-bonus" placeholder="Bonus/provision...">
+                            <input type="number" name="bonus" id="inp-bonus" placeholder="Bonus/provision...">
                             <div class="toggle-container">
                                 <div class="description-container flex-center">
                                     <div class="description">/mnd</div>
                                     <div class="description">/år</div>
                                 </div>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="bonus-toggle">
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -89,11 +89,11 @@
 
                     <div class="row flex-center">
                         <label for="Fritvalgskonto" class="field">
-                            <input type="text" name="fritvalg" id="inp-fritvalg" placeholder="Fritvalgskonto...">
+                            <input type="number" name="fritvalg" id="inp-fritvalg" placeholder="Fritvalgskonto...">
                             <span class="meta">%</span>
                         </label>
                         <label for="Timer" class="field">
-                            <input type="text" name="timer" id="inp-hours" placeholder="Antal timer...">
+                            <input required type="number" name="timer" id="inp-hours" placeholder="Antal timer...">
                             <span class="meta">/u</span>
                         </label>
                         <label class="field check-container">

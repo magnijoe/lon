@@ -16,9 +16,24 @@ jobForm.onsubmit = function(event){
     event.preventDefault();
 
     jobName = document.getElementById("inp-name").value
-    pay = document.getElementById("inp-lon").value
+
+    payToggle = document.getElementById("lon-toggle").checked
+    if(payToggle){
+        pay = document.getElementById("inp-lon").value
+    } else {
+        pay = document.getElementById("inp-lon").value / 12
+    }
+
+    console.log(pay)
     pension = document.getElementById("inp-pension").value
-    bonus = document.getElementById("inp-bonus").value
+
+    bonusToggle = document.getElementById("bonus-toggle").checked
+    if(bonusToggle){
+        bonus = document.getElementById("inp-bonus").value
+    } else {
+        bonus = document.getElementById("inp-bonus").value / 12
+    }
+
     fritvalg = document.getElementById("inp-fritvalg").value
     hours = document.getElementById("inp-hours").value
     phone = document.getElementById("inp-phone-paid").checked
@@ -43,6 +58,7 @@ let jobsContainer = document.querySelector(".jobs-wrap");
 
 
 function updatejobs() {
+    let currency = " DKK"
     jobsContainer.innerHTML = ""; // Clear the container
 
     // Iterate through the jobsArray and create divs for each job
@@ -77,23 +93,23 @@ function updatejobs() {
     jobDiv.appendChild(jobNameDiv);
 
     let pensionDiv = document.createElement("div");
-    pensionDiv.classList.add("pension")
-    pensionDiv.textContent = job.pension;
+    pensionDiv.classList.add("pension");
+    pensionDiv.textContent = job.pension + "%";
     jobDiv.appendChild(pensionDiv);
 
     let bonusDiv = document.createElement("div");
     bonusDiv.classList.add("bonus")
-    bonusDiv.textContent = job.bonus;
+    bonusDiv.textContent = job.bonus + currency;
     jobDiv.appendChild(bonusDiv);
 
     let fritvalgDiv = document.createElement("div");
     fritvalgDiv.classList.add("fritvalg")
-    fritvalgDiv.textContent = job.fritvalg;
+    fritvalgDiv.textContent = job.fritvalg + "%";
     jobDiv.appendChild(fritvalgDiv);
 
     let hoursDiv = document.createElement("div");
     hoursDiv.classList.add("hours")
-    hoursDiv.textContent = job.hours;
+    hoursDiv.textContent = job.hours + " timer";
     jobDiv.appendChild(hoursDiv);
 
     checkmark = `
@@ -145,11 +161,10 @@ function updatejobs() {
 
     let payDiv = document.createElement("div");
     payDiv.classList.add("pay")
-    payAnually = job.pay * 12
-    payDiv.textContent = payAnually.toLocaleString("da-DK");
+    payAnually = job.pay * 12 + job.bonus * 12
+    console.log("job.pay = " + job.pay)
+    payDiv.textContent = payAnually.toLocaleString("da-DK") + currency;
     jobDiv.appendChild(payDiv);
-
-
 
     let totalDiv = document.createElement("div");
     totalDiv.classList.add("pay-gross");
@@ -162,13 +177,13 @@ function updatejobs() {
         totalGross += job.pay * 12
         totalGross += job.pay * 12 * job.pension / 100
         totalGross += job.pay * 12 * job.fritvalg / 100
-        totalGross += job.bonus
+        totalGross += job.bonus * 12
         return totalGross
     }
 
     console.log(getTotalGross());
 
-    totalDiv.textContent = totalGross.toLocaleString("da-DK")
+    totalDiv.textContent = totalGross.toLocaleString("da-DK") + currency
     jobDiv.appendChild(totalDiv)
 
 
