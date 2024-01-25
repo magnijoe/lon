@@ -60,6 +60,12 @@ a {
     }
 }
 
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .switch {
     position: relative;
     display: inline-block;
@@ -313,6 +319,12 @@ header {
                     width: 110px;
                 }
             }
+
+            .submit-job {
+              background-color: #121418;
+              text-transform: uppercase;
+              font-weight: var(--bold);
+            }
         }
     }
 
@@ -320,7 +332,7 @@ header {
 
 .jobs-grid {
   display: grid;
-  grid-template-columns: [Del] 12px [Job] 135px [Pension] 60px [Bonus] 60px [Frit] 60px [Hours] 60px [Phone] 60px [Internet] 60px [Lunch] 60px [Pay] 140px [Gross] 1fr;
+  grid-template-columns: [Del] 12px [Job] minmax(100px, 150px) [Pension] minmax(25px, 60px) [Bonus] minmax(25px, 60px) [Frit] minmax(25px, 60px) [Hours] minmax(25px, 60px) [Phone] minmax(25px, 60px) [Internet] minmax(25px, 60px) [Lunch] minmax(25px, 60px) [Pay] minmax(110px, 140px) [Gross] minmax(110px, 140px);
   padding: var(--gap);
   gap: var(--gap);
 

@@ -55,7 +55,7 @@
                             <input required type="text" name="Name" id="inp-name" placeholder="Navn...">
                         </label>
                         <label for="Løn" class="field" id="lon">
-                            <input required type="number" name="Løn" id="inp-lon" placeholder="Løn...">
+                            <input required maxlength="11" type="tel" name="Løn" id="inp-lon" placeholder="Løn..." class="format-input">
                             <div class="toggle-container">
                                 <div class="description-container flex-center">
                                     <div class="description">/mnd</div>
@@ -73,7 +73,7 @@
                             <span class="meta">%</span>
                         </label>
                         <label for="Bonus/provision" class="field" id="bonus">
-                            <input type="number" name="bonus" id="inp-bonus" placeholder="Bonus/provision...">
+                            <input type="text" name="bonus" id="inp-bonus" placeholder="Bonus/provision..." class="format-input">
                             <div class="toggle-container">
                                 <div class="description-container flex-center">
                                     <div class="description">/mnd</div>
@@ -113,7 +113,7 @@
                         </label>
                     </div>
                     <label for="" class="submit">
-                        <input type="submit" value="Submit" class="submit-job">
+                        <input type="submit" value="Se din Lön" class="submit-job">
                     </label>
                 </form>
             </div>

@@ -10,6 +10,21 @@ function job(jobName, pay, pension, bonus, fritvalg, hours, phone = Boolean, int
     this.lunch = lunch;
 }
 
+var inputToLocaleStringElm = document.querySelectorAll(".format-input")
+console.log (inputToLocaleStringElm)
+
+
+inputToLocaleStringElm.forEach(function(elm){
+    elm.addEventListener('input', function(){
+        var n = parseInt(this.value.replace(/\D/g,''), 10);
+        elm.value = n.toLocaleString("da-DK")
+
+        if(elm.value === "NaN"){
+            elm.value = ""
+        }
+    });
+})
+
 var jobForm = document.querySelector(".lon-form")
 
 jobForm.onsubmit = function(event){
@@ -19,19 +34,30 @@ jobForm.onsubmit = function(event){
 
     payToggle = document.getElementById("lon-toggle").checked
     if(payToggle){
-        pay = document.getElementById("inp-lon").value
+        payValue = document.getElementById("inp-lon").value
+        payValueClean = payValue.replace(/\./g,'')
+        pay = Number(payValueClean)
+        console.log("yearky selected " + pay)
     } else {
-        pay = document.getElementById("inp-lon").value / 12
+        payValue = document.getElementById("inp-lon").value
+        payValueClean = payValue.replace(/\./g,'')
+        pay = Number(payValueClean) * 12
+        console.log("montly selected " + pay)
     }
 
-    console.log(pay)
     pension = document.getElementById("inp-pension").value
 
     bonusToggle = document.getElementById("bonus-toggle").checked
     if(bonusToggle){
-        bonus = document.getElementById("inp-bonus").value
+        bonusValue = document.getElementById("inp-bonus").value
+        bonusValueClean = bonusValue.replace(/\./g,'')
+        bonus = Number(bonusValueClean)
+        console.log("bonus yearly selected " + bonus)
     } else {
-        bonus = document.getElementById("inp-bonus").value / 12
+        bonusValue = document.getElementById("inp-bonus").value
+        bonusValueClean = bonusValue.replace(/\./g,'')
+        bonus = Number(bonusValueClean) * 12
+        console.log("bonus montly selected " + bonus)
     }
 
     fritvalg = document.getElementById("inp-fritvalg").value
@@ -46,8 +72,8 @@ jobForm.onsubmit = function(event){
     updatejobs();
 }
 
-let job1 = new job("Nordicals", 33000, 5, 10000, 5, "37", true, false, true);
-let job2 = new job("HLTV", 42000, 5, 10, 0, "37,5", false, true, false);
+let job1 = new job("Nordicals", 396000, 5, 9900, 5, "37", true, false, true);
+let job2 = new job("HLTV", 480000, 5, 10, 0, "37,5", false, true, false);
 
 
 let jobsArray = [job1, job2];
@@ -55,6 +81,7 @@ let jobsArray = [job1, job2];
 
 // Get reference to the div where you want to display the jobs
 let jobsContainer = document.querySelector(".jobs-wrap");
+
 
 
 function updatejobs() {
@@ -99,7 +126,14 @@ function updatejobs() {
 
     let bonusDiv = document.createElement("div");
     bonusDiv.classList.add("bonus")
-    bonusDiv.textContent = job.bonus + currency;
+
+    jobBonus = job.bonus * 12
+    bonusDivided = jobBonus / 1000
+    bonusDividedRounded = Math.round(bonusDivided * 10) / 10;
+    job.bonus >= 1000 ? bonusDiv.textContent = bonusDividedRounded + "K" : bonusDiv.textContent = job.bonus.toLocaleString("da-DK") + currency;
+
+
+    // bonusDiv.textContent = job.bonus.toLocaleString("da-DK") + currency;
     jobDiv.appendChild(bonusDiv);
 
     let fritvalgDiv = document.createElement("div");
@@ -109,7 +143,7 @@ function updatejobs() {
 
     let hoursDiv = document.createElement("div");
     hoursDiv.classList.add("hours")
-    hoursDiv.textContent = job.hours + " timer";
+    hoursDiv.textContent = job.hours + " t";
     jobDiv.appendChild(hoursDiv);
 
     checkmark = `
@@ -129,23 +163,15 @@ function updatejobs() {
     let phoneDiv = document.createElement("div")
     phoneDiv.classList.add("phone")
     phoneDiv.classList.add("center")
-    
-    if(job.phone){
-        phoneDiv.innerHTML = checkmarkChecked
-    } else {
-        phoneDiv.innerHTML = checkmark
-    }
+
+    job.phone ? phoneDiv.innerHTML = checkmarkChecked : phoneDiv.innerHTML = checkmark
     jobDiv.appendChild(phoneDiv)
 
     let internetDiv = document.createElement("div")
     internetDiv.classList.add("internet")
     internetDiv.classList.add("center")
-    
-    if(job.internet){
-        internetDiv.innerHTML = checkmarkChecked
-    } else {
-        internetDiv.innerHTML = checkmark
-    }
+
+    job.internet ? internetDiv.innerHTML = checkmarkChecked : internetDiv.innerHTML = checkmark
     jobDiv.appendChild(internetDiv)
 
     let lunchDiv = document.createElement("div")
@@ -161,7 +187,7 @@ function updatejobs() {
 
     let payDiv = document.createElement("div");
     payDiv.classList.add("pay")
-    payAnually = job.pay * 12 + job.bonus * 12
+    payAnually = job.pay + job.bonus
     console.log("job.pay = " + job.pay)
     payDiv.textContent = payAnually.toLocaleString("da-DK") + currency;
     jobDiv.appendChild(payDiv);
@@ -174,11 +200,11 @@ function updatejobs() {
     let totalGross = 0
 
     function getTotalGross() {
-        totalGross += job.pay * 12
-        totalGross += job.pay * 12 * job.pension / 100
-        totalGross += job.pay * 12 * job.fritvalg / 100
-        totalGross += job.bonus * 12
-        return totalGross
+        totalGross += job.pay
+        totalGross += job.pay * job.pension / 100
+        totalGross += job.pay * job.fritvalg / 100
+        totalGross += job.bonus
+        return totalGross.toFixed(0)
     }
 
     console.log(getTotalGross());
