@@ -38,7 +38,7 @@
                 <div class="divider-vertical"></div>
 
                 <a href="#" class="nav-user">
-                    <img src="" alt="User Avatar">
+                    <img src="https://variety.com/wp-content/uploads/2021/04/Avatar.jpg?w=800&h=533&crop=1" alt="User Avatar">
                 </a>
             </nav>
         </header>
@@ -66,12 +66,18 @@
                                     <span class="slider"></span>
                                 </label>
                             </div>
-                        
                         </label>
                         <label for="Pension" class="field" id="pension">
                             <input required type="number" name="pension" id="inp-pension" placeholder="Pension...">
                             <span class="meta">%</span>
                         </label>
+                        <label for="Fritvalgskonto" class="field" id="fritvalg">
+                            <input type="number" name="fritvalg" id="inp-fritvalg" placeholder="Fritvalgskonto...">
+                            <span class="meta">%</span>
+                        </label>
+                    </div>
+
+                    <div class="row flex-center">
                         <label for="Bonus/provision" class="field" id="bonus">
                             <input type="text" name="bonus" id="inp-bonus" placeholder="Bonus/provision..." class="format-input">
                             <div class="toggle-container">
@@ -85,17 +91,12 @@
                                 </label>
                             </div>
                         </label>
-                    </div>
-
-                    <div class="row flex-center">
-                        <label for="Fritvalgskonto" class="field">
-                            <input type="number" name="fritvalg" id="inp-fritvalg" placeholder="Fritvalgskonto...">
-                            <span class="meta">%</span>
-                        </label>
                         <label for="Timer" class="field">
                             <input required type="number" name="timer" id="inp-hours" placeholder="Antal timer...">
                             <span class="meta">/u</span>
                         </label>
+                    </div>
+                    <div class="row flex-center">
                         <label class="field check-container">
                             Betalt telefon
                             <input type="checkbox" name="betalt-telefon" id="inp-phone-paid">
@@ -111,11 +112,20 @@
                             <input type="checkbox" name="betalt-frokost" id="inp-lunch-paid">
                             <span class="checkmark"></span>
                         </label>
+                        <label class="field check-container">
+                            5 feriefridage
+                            <input type="checkbox" name="feriefridage" id="inp-extra-days-off">
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
                     <label for="" class="submit">
                         <input type="submit" value="Se din Lön" class="submit-job">
                     </label>
                 </form>
+            </div>
+
+            <div class="content jobs-info">
+
             </div>
 
             <div class="content">

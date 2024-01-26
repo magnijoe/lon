@@ -1,4 +1,4 @@
-function job(jobName, pay, pension, bonus, fritvalg, hours, phone = Boolean, internet = Boolean, lunch = Boolean) {
+function job(jobName, pay, pension, bonus, fritvalg, hours, phone = Boolean, internet = Boolean, lunch = Boolean, exDaysOff = Boolean) {
     this.jobName = jobName;
     this.pay = pay;
     this.pension = pension;
@@ -8,12 +8,12 @@ function job(jobName, pay, pension, bonus, fritvalg, hours, phone = Boolean, int
     this.phone = phone;
     this.internet = internet;
     this.lunch = lunch;
+    this.exDaysOff = exDaysOff
 }
 
 var inputToLocaleStringElm = document.querySelectorAll(".format-input")
-console.log (inputToLocaleStringElm)
 
-
+// auto format inputs with toLocaleString while typing
 inputToLocaleStringElm.forEach(function(elm){
     elm.addEventListener('input', function(){
         var n = parseInt(this.value.replace(/\D/g,''), 10);
@@ -37,12 +37,10 @@ jobForm.onsubmit = function(event){
         payValue = document.getElementById("inp-lon").value
         payValueClean = payValue.replace(/\./g,'')
         pay = Number(payValueClean)
-        console.log("yearky selected " + pay)
     } else {
         payValue = document.getElementById("inp-lon").value
         payValueClean = payValue.replace(/\./g,'')
         pay = Number(payValueClean) * 12
-        console.log("montly selected " + pay)
     }
 
     pension = document.getElementById("inp-pension").value
@@ -65,26 +63,61 @@ jobForm.onsubmit = function(event){
     phone = document.getElementById("inp-phone-paid").checked
     internet = document.getElementById("inp-internet-paid").checked
     lunch = document.getElementById("inp-lunch-paid").checked
+    exDaysOff = document.getElementById("inp-extra-days-off").checked
 
-    newjob = new job(jobName, pay, pension, bonus, fritvalg, hours, phone, internet, lunch)
+    newjob = new job(jobName, pay, pension, bonus, fritvalg, hours, phone, internet, lunch, exDaysOff)
     jobsArray.push(newjob)
 
     updatejobs();
+    showJobInfo();
 }
 
-let job1 = new job("Nordicals", 396000, 5, 9900, 5, "37", true, false, true);
-let job2 = new job("HLTV", 480000, 5, 10, 0, "37,5", false, true, false);
+let jobInfoContainer = document.querySelector(".jobs-info")
+
+function showJobInfo(){
+
+    let payDiv = document.createElement("div")
+    payDiv.innerHTML = `Din årlige løn er <span class="highlight">${pay.toLocaleString("da-DK")} kroner.</span> `
+    jobInfoContainer.appendChild(payDiv)
+
+    let pensionDiv = document.createElement("div")
+    pensionTotal = pay * pension / 100
+    pensionDiv.innerHTML = `Din arbejdsgiver indbetaler <span class="highlight">${pension.toLocaleString("da-DK")}%</span> til din pension, som årligt svarer til <span class="highlight">${pensionTotal.toLocaleString("da-DK")}</span> kroner.`
+    jobInfoContainer.appendChild(pensionDiv)
+
+    let bonusDiv = document.createElement("div")
+    bonusDiv.innerHTML = `Udover din årlige løn, får du bonus eller provision på <span class="highlight">${bonus.toLocaleString("da-DK")} kroner</span>. Det antages, at dette beløb ikke er pensionsgivende.`
+    jobInfoContainer.appendChild(bonusDiv)
+
+    let fritvalgDiv = document.createElement("div")
+    fritvalgTotal = pay * fritvalg / 100
+    fritvalgDiv.innerHTML = `Din fritvalgsordning giver dig <span class="highlight">${fritvalgTotal.toLocaleString("da-DK")} kroner</span> ekstra i løn om året. Det antages, at dette beløb ikke er pensionsgivende.`
+    jobInfoContainer.appendChild(fritvalgDiv)
+
+    let hoursDiv = document.createElement("div")
+    monthlyPay = pay / 12
+    regulatePay = monthlyPay * 37 / hours
+
+    if(hours === 37){
+        hoursDiv.innerHTML = `Du arbejder <span class="highlight">${hours} timer</span> om ugen som svarer til en normal fuldtidsstilling.`
+    } else {
+        hoursDiv.innerHTML = `Du arbejder <span class="highlight">${hours} timer</span> om ugen og tjener <span class="highlight">${monthlyPay.toLocaleString("da-DK")} kroner</span> om måneden. Hvis din arbejdstid var 37 timer om ugen, ville det svare til <span class="highlight">${regulatePay.toLocaleString("da-DK")}</span> kroner om måneden.`
+    }
+    jobInfoContainer.appendChild(hoursDiv)
+}
+
+let job1 = new job("Nordicals", 396000, 5, 9900, 5, "37", true, false, true, false);
+let job2 = new job("HLTV", 480000, 5, 10000, 0, "37,5", false, true, false, false);
+let job3 = new job("HLTVferiedage", 480000, 5, 10000, 0, "37,5", false, true, false, true);
 
 
-let jobsArray = [job1, job2];
-
+let jobsArray = [job1, job2, job3];
 
 // Get reference to the div where you want to display the jobs
 let jobsContainer = document.querySelector(".jobs-wrap");
 
-
-
 function updatejobs() {
+
     let currency = " DKK"
     jobsContainer.innerHTML = ""; // Clear the container
 
@@ -92,15 +125,12 @@ function updatejobs() {
     jobsArray.forEach(function(job, index) {
     // Create a new div for the job
     let jobDiv = document.createElement("div");
-    jobDiv.classList.add("jobs-grid"); // Optional: Add a CSS class for styling purposes
-    jobDiv.classList.add("jobs-container"); // Optional: Add a CSS class for styling purposes
-
+    jobDiv.className = "jobs-grid jobs-container"
 
     // Create elements for job details and append to the jobDiv
 
     let removeButton = document.createElement("div");
-        removeButton.classList.add("close-button")
-        removeButton.classList.add("flex-center")
+        removeButton.className = "close-button flex-center"
 
         removeButton.innerHTML = `
             <i class="fa-solid fa-xmark"></i>
@@ -127,10 +157,9 @@ function updatejobs() {
     let bonusDiv = document.createElement("div");
     bonusDiv.classList.add("bonus")
 
-    jobBonus = job.bonus * 12
-    bonusDivided = jobBonus / 1000
-    bonusDividedRounded = Math.round(bonusDivided * 10) / 10;
-    job.bonus >= 1000 ? bonusDiv.textContent = bonusDividedRounded + "K" : bonusDiv.textContent = job.bonus.toLocaleString("da-DK") + currency;
+    bonusDivided = job.bonus / 1000
+    // bonusDividedRounded = Math.round(bonusDivided * 10) / 10;
+    job.bonus >= 1000 ? bonusDiv.textContent = bonusDivided + "K" : bonusDiv.textContent = job.bonus.toLocaleString("da-DK") + currency;
 
 
     // bonusDiv.textContent = job.bonus.toLocaleString("da-DK") + currency;
@@ -161,28 +190,18 @@ function updatejobs() {
     `;
 
     let phoneDiv = document.createElement("div")
-    phoneDiv.classList.add("phone")
-    phoneDiv.classList.add("center")
-
+    phoneDiv.className = "phone center"
     job.phone ? phoneDiv.innerHTML = checkmarkChecked : phoneDiv.innerHTML = checkmark
     jobDiv.appendChild(phoneDiv)
 
     let internetDiv = document.createElement("div")
-    internetDiv.classList.add("internet")
-    internetDiv.classList.add("center")
-
+    internetDiv.className = "internet center"
     job.internet ? internetDiv.innerHTML = checkmarkChecked : internetDiv.innerHTML = checkmark
     jobDiv.appendChild(internetDiv)
 
     let lunchDiv = document.createElement("div")
-    lunchDiv.classList.add("internet")
-    lunchDiv.classList.add("center")
-    
-    if(job.lunch){
-        lunchDiv.innerHTML = checkmarkChecked
-    } else {
-        lunchDiv.innerHTML = checkmark
-    }
+    lunchDiv.className = "lunch center"
+    job.lunch ? lunchDiv.innerHTML = checkmarkChecked : lunchDiv.innerHTML = checkmark
     jobDiv.appendChild(lunchDiv)
 
     let payDiv = document.createElement("div");
@@ -196,7 +215,6 @@ function updatejobs() {
     totalDiv.classList.add("pay-gross");
     totalDiv.classList.add("right");
 
-
     let totalGross = 0
 
     function getTotalGross() {
@@ -204,6 +222,7 @@ function updatejobs() {
         totalGross += job.pay * job.pension / 100
         totalGross += job.pay * job.fritvalg / 100
         totalGross += job.bonus
+        job.exDaysOff ? totalGross += job.pay * 0.0045 * 5 : totalGross += 0;
         return totalGross.toFixed(0)
     }
 
@@ -211,10 +230,6 @@ function updatejobs() {
 
     totalDiv.textContent = totalGross.toLocaleString("da-DK") + currency
     jobDiv.appendChild(totalDiv)
-
-
-
-
 
     // Append the jobDiv to the jobsContainer
     jobsContainer.appendChild(jobDiv);
