@@ -50,12 +50,10 @@ jobForm.onsubmit = function(event){
         bonusValue = document.getElementById("inp-bonus").value
         bonusValueClean = bonusValue.replace(/\./g,'')
         bonus = Number(bonusValueClean)
-        console.log("bonus yearly selected " + bonus)
     } else {
         bonusValue = document.getElementById("inp-bonus").value
         bonusValueClean = bonusValue.replace(/\./g,'')
         bonus = Number(bonusValueClean) * 12
-        console.log("bonus montly selected " + bonus)
     }
 
     fritvalg = document.getElementById("inp-fritvalg").value
@@ -76,34 +74,42 @@ let jobInfoContainer = document.querySelector(".jobs-info")
 
 function showJobInfo(){
 
-    let payDiv = document.createElement("div")
-    payDiv.innerHTML = `Din årlige løn er <span class="highlight">${pay.toLocaleString("da-DK")} kroner.</span> `
-    jobInfoContainer.appendChild(payDiv)
+    function createJobDetailElement(className, description = '') {
+        const detailDiv = document.createElement('div');
+        detailDiv.className = `${className}-div`
+        detailDiv.innerHTML = `${description}`;
+        return detailDiv;
+    }
 
-    let pensionDiv = document.createElement("div")
+    jobInfoContainer.appendChild(createJobDetailElement("pay",
+    `Din årlige løn er <span class="highlight">${pay.toLocaleString("da-DK")} kroner.</span>`
+    ));
+
     pensionTotal = pay * pension / 100
-    pensionDiv.innerHTML = `Din arbejdsgiver indbetaler <span class="highlight">${pension.toLocaleString("da-DK")}%</span> til din pension, som årligt svarer til <span class="highlight">${pensionTotal.toLocaleString("da-DK")}</span> kroner.`
-    jobInfoContainer.appendChild(pensionDiv)
+    jobInfoContainer.appendChild(createJobDetailElement("pension",
+    `Din arbejdsgiver indbetaler <span class="highlight">${pension.toLocaleString("da-DK")}%</span> til din pension, som årligt svarer til <span class="highlight">${pensionTotal.toLocaleString("da-DK")}</span> kroner.`
+    ));
 
-    let bonusDiv = document.createElement("div")
-    bonusDiv.innerHTML = `Udover din årlige løn, får du bonus eller provision på <span class="highlight">${bonus.toLocaleString("da-DK")} kroner</span>. Det antages, at dette beløb ikke er pensionsgivende.`
-    jobInfoContainer.appendChild(bonusDiv)
+    jobInfoContainer.appendChild(createJobDetailElement("bonus", 
+    `Udover din årlige løn, får du bonus eller provision på <span class="highlight">${bonus.toLocaleString("da-DK")} kroner</span>. Det antages, at dette beløb ikke er pensionsgivende.`
+    ));
 
-    let fritvalgDiv = document.createElement("div")
     fritvalgTotal = pay * fritvalg / 100
-    fritvalgDiv.innerHTML = `Din fritvalgsordning giver dig <span class="highlight">${fritvalgTotal.toLocaleString("da-DK")} kroner</span> ekstra i løn om året. Det antages, at dette beløb ikke er pensionsgivende.`
-    jobInfoContainer.appendChild(fritvalgDiv)
+    jobInfoContainer.appendChild(createJobDetailElement("fritvalg", 
+    `Din fritvalgsordning giver dig <span class="highlight">${fritvalgTotal.toLocaleString("da-DK")} kroner</span> ekstra i løn om året. Det antages, at dette beløb ikke er pensionsgivende.`
+    ));
 
-    let hoursDiv = document.createElement("div")
     monthlyPay = pay / 12
     regulatePay = monthlyPay * 37 / hours
-
-    if(hours === 37){
-        hoursDiv.innerHTML = `Du arbejder <span class="highlight">${hours} timer</span> om ugen som svarer til en normal fuldtidsstilling.`
+    if(hours == 37){
+        jobInfoContainer.appendChild(createJobDetailElement("hours", 
+        `Du arbejder <span class="highlight">${hours} timer</span> om ugen som svarer til en normal fuldtidsstilling.`
+        ));
     } else {
-        hoursDiv.innerHTML = `Du arbejder <span class="highlight">${hours} timer</span> om ugen og tjener <span class="highlight">${monthlyPay.toLocaleString("da-DK")} kroner</span> om måneden. Hvis din arbejdstid var 37 timer om ugen, ville det svare til <span class="highlight">${regulatePay.toLocaleString("da-DK")}</span> kroner om måneden.`
+        jobInfoContainer.appendChild(createJobDetailElement("hours", 
+        `Du arbejder <span class="highlight">${hours} timer</span> om ugen og tjener <span class="highlight">${monthlyPay.toLocaleString("da-DK")} kroner</span> om måneden. Hvis din arbejdstid var 37 timer om ugen, ville det svare til <span class="highlight">${regulatePay.toLocaleString("da-DK")}</span> kroner om måneden.`
+        ));
     }
-    jobInfoContainer.appendChild(hoursDiv)
 }
 
 let job1 = new job("Nordicals", 396000, 5, 9900, 5, "37", true, false, true, false);
@@ -117,6 +123,13 @@ let jobsArray = [job1, job2, job3];
 let jobsContainer = document.querySelector(".jobs-wrap");
 
 function updatejobs() {
+
+    function createJobDetailElement(className, object, unit = '') {
+        const detailDiv = document.createElement('div');
+        detailDiv.className = className
+        detailDiv.textContent = `${object} ${unit}`;
+        return detailDiv;
+    }
 
     let currency = " DKK"
     jobsContainer.innerHTML = ""; // Clear the container
@@ -144,79 +157,41 @@ function updatejobs() {
 
     jobDiv.appendChild(removeButton)
 
-    let jobNameDiv = document.createElement("div");
-    jobNameDiv.textContent = job.jobName;
-    jobNameDiv.classList.add("job")
-    jobDiv.appendChild(jobNameDiv);
-
-    let pensionDiv = document.createElement("div");
-    pensionDiv.classList.add("pension");
-    pensionDiv.textContent = job.pension + "%";
-    jobDiv.appendChild(pensionDiv);
+    jobDiv.appendChild(createJobDetailElement("job", job.jobName))
+    jobDiv.appendChild(createJobDetailElement("pension", job.pension, "%"))
 
     let bonusDiv = document.createElement("div");
     bonusDiv.classList.add("bonus")
-
     bonusDivided = job.bonus / 1000
-    // bonusDividedRounded = Math.round(bonusDivided * 10) / 10;
     job.bonus >= 1000 ? bonusDiv.textContent = bonusDivided + "K" : bonusDiv.textContent = job.bonus.toLocaleString("da-DK") + currency;
-
-
-    // bonusDiv.textContent = job.bonus.toLocaleString("da-DK") + currency;
     jobDiv.appendChild(bonusDiv);
 
-    let fritvalgDiv = document.createElement("div");
-    fritvalgDiv.classList.add("fritvalg")
-    fritvalgDiv.textContent = job.fritvalg + "%";
-    jobDiv.appendChild(fritvalgDiv);
+    jobDiv.appendChild(createJobDetailElement("fritvalg", job.fritvalg, "%"))
+    jobDiv.appendChild(createJobDetailElement("hours", job.hours, "t"))
 
-    let hoursDiv = document.createElement("div");
-    hoursDiv.classList.add("hours")
-    hoursDiv.textContent = job.hours + " t";
-    jobDiv.appendChild(hoursDiv);
-
-    checkmark = `
-        <label class="check-container">
-            <input type="checkbox" disabled>
-            <span class="checkmark" ></span>
-        </label>
-    `;
-
-    checkmarkChecked = `
-        <label class="check-container">
-            <input type="checkbox" checked disabled>
-            <span class="checkmark" ></span>
-        </label>
-    `;
-
-    let phoneDiv = document.createElement("div")
-    phoneDiv.className = "phone center"
-    job.phone ? phoneDiv.innerHTML = checkmarkChecked : phoneDiv.innerHTML = checkmark
-    jobDiv.appendChild(phoneDiv)
-
-    let internetDiv = document.createElement("div")
-    internetDiv.className = "internet center"
-    job.internet ? internetDiv.innerHTML = checkmarkChecked : internetDiv.innerHTML = checkmark
-    jobDiv.appendChild(internetDiv)
-
-    let lunchDiv = document.createElement("div")
-    lunchDiv.className = "lunch center"
-    job.lunch ? lunchDiv.innerHTML = checkmarkChecked : lunchDiv.innerHTML = checkmark
-    jobDiv.appendChild(lunchDiv)
+    function createCheckboxDiv(className, checked) {
+        const checkboxDiv = document.createElement("div");
+        checkboxDiv.className = `${className} center`;
+    
+        const checkboxHtml = checked
+            ? `<label class="check-container"><input type="checkbox" checked disabled><span class="checkmark"></span></label>`
+            : `<label class="check-container"><input type="checkbox" disabled><span class="checkmark"></span></label>`;
+    
+        checkboxDiv.innerHTML = checkboxHtml;
+        return checkboxDiv;
+    }
+    
+    jobDiv.appendChild(createCheckboxDiv("phone", job.phone));
+    jobDiv.appendChild(createCheckboxDiv("internet", job.internet));
+    jobDiv.appendChild(createCheckboxDiv("lunch", job.lunch));
 
     let payDiv = document.createElement("div");
     payDiv.classList.add("pay")
     payAnually = job.pay + job.bonus
-    console.log("job.pay = " + job.pay)
     payDiv.textContent = payAnually.toLocaleString("da-DK") + currency;
     jobDiv.appendChild(payDiv);
 
-    let totalDiv = document.createElement("div");
-    totalDiv.classList.add("pay-gross");
-    totalDiv.classList.add("right");
-
     let totalGross = 0
-
     function getTotalGross() {
         totalGross += job.pay
         totalGross += job.pay * job.pension / 100
@@ -226,12 +201,8 @@ function updatejobs() {
         return totalGross.toFixed(0)
     }
 
-    console.log(getTotalGross());
+    jobDiv.appendChild(createJobDetailElement("pay-gross right", totalGross.toLocaleString("da-DK"), currency))
 
-    totalDiv.textContent = totalGross.toLocaleString("da-DK") + currency
-    jobDiv.appendChild(totalDiv)
-
-    // Append the jobDiv to the jobsContainer
     jobsContainer.appendChild(jobDiv);
     });
 }
