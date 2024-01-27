@@ -232,6 +232,16 @@ header {
     transform: rotate(45deg);
   }
 
+.beta {
+  padding: 4px 8px;
+  background-color: var(--background);
+  border-radius: 8px;
+  text-transform: uppercase;
+  color: var(--textFaded);
+  font-size: 11px;
+  cursor: default;
+}
+
 .container {
     width: 100%;
     display: flex;
@@ -317,14 +327,30 @@ header {
 
             }
 
-            #lon {
+            input:placeholder-shown + .placeholder {
+              top: 50%;
+              font-size: 14px;
+          }
+
+            input:focus + .placeholder, .placeholder {
+              top: 8px;
+              transition: all cubic-bezier(0.18, 0.89, 0.21, 1.1) .5s;
+              font-size: 12px;
+              position: absolute;
+              transform: translateY(-50%);
+              left: calc(var(--gap) * 2);
+              color:rgba(255,255,255,.35);
+              pointer-events: none;
+            }
+
+            /* #lon {
                 width: auto;
 
                 #inp-lon {
                     width: 88px;
                 }
 
-            }
+            } */
 
             #pension {
                 width: auto;
@@ -333,11 +359,11 @@ header {
                     width: 110px;
                 }
             }
-
+/* 
             #fritvalg {
               width: auto;
               min-width: 160px;
-            }
+            } */
 
             .submit-job {
               background-color: #121418;

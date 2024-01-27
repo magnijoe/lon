@@ -200,6 +200,8 @@ function updatejobs() {
         job.exDaysOff ? totalGross += job.pay * 0.0045 * 5 : totalGross += 0;
         return totalGross.toFixed(0)
     }
+    
+    getTotalGross();
 
     jobDiv.appendChild(createJobDetailElement("pay-gross right", totalGross.toLocaleString("da-DK"), currency))
 

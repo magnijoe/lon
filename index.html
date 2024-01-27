@@ -47,58 +47,59 @@
             <div class="content">
                 <div class="field flex-center field-header">
                     <h1>Lønberegner</h1>
-                    <button class="beta">Beta</button>
+                    <div class="beta">Beta</div>
                 </div>
                 <form action="" class="lon-form">
                     <div class="row flex-center">
-                        <label for="Navn" class="field">
-                            <input required type="text" name="Name" id="inp-name" placeholder="Navn...">
-                        </label>
-                        <label for="Løn" class="field" id="lon">
+                        <div class="field">
+                            <input required type="text" name="name" id="inp-name" placeholder=" ">
+                            <label class ="placeholder" for="name">Job/titel</label>
+                        </div>
+                        <div for="Løn" class="field" id="lon">
                             <input required maxlength="11" type="tel" name="Løn" id="inp-lon" placeholder="Løn..." class="format-input">
-                            <div class="toggle-container">
+                            <label class="toggle-container">
                                 <div class="description-container flex-center">
                                     <div class="description">/mnd</div>
                                     <div class="description">/år</div>
                                 </div>
-                                <label class="switch">
+                                <div class="switch">
                                     <input type="checkbox" id="lon-toggle">
                                     <span class="slider"></span>
-                                </label>
-                            </div>
-                        </label>
-                        <label for="Pension" class="field" id="pension">
+                                </div>
+                            </label>
+                        </div>
+                        <div for="Pension" class="field" id="pension">
                             <input required type="number" name="pension" id="inp-pension" placeholder="Pension...">
                             <span class="meta">%</span>
-                        </label>
-                        <label for="Fritvalgskonto" class="field" id="fritvalg">
-                            <input type="number" name="fritvalg" id="inp-fritvalg" placeholder="Fritvalgskonto...">
-                            <span class="meta">%</span>
-                        </label>
+                        </div>
                     </div>
 
                     <div class="row flex-center">
-                        <label for="Bonus/provision" class="field" id="bonus">
+                        <div for="Fritvalgskonto" class="field" id="fritvalg">
+                            <input type="number" name="fritvalg" id="inp-fritvalg" placeholder="Fritvalgskonto...">
+                            <span class="meta">%</span>
+                        </div>
+                        <div for="Bonus/provision" class="field" id="bonus">
                             <input type="text" name="bonus" id="inp-bonus" placeholder="Bonus/provision..." class="format-input">
-                            <div class="toggle-container">
+                            <label class="toggle-container">
                                 <div class="description-container flex-center">
                                     <div class="description">/mnd</div>
                                     <div class="description">/år</div>
                                 </div>
-                                <label class="switch">
+                                <div class="switch">
                                     <input type="checkbox" id="bonus-toggle">
                                     <span class="slider"></span>
-                                </label>
-                            </div>
-                        </label>
-                        <label for="Timer" class="field">
+                                </div>
+                            </label>
+                        </div>
+                        <div for="Timer" class="field">
                             <input required type="number" name="timer" id="inp-hours" placeholder="Antal timer...">
                             <span class="meta">/u</span>
-                        </label>
+                        </div>
                     </div>
                     <div class="row flex-center">
                         <label class="field check-container">
-                            Betalt telefon
+                            Betalt telefon og abb.
                             <input type="checkbox" name="betalt-telefon" id="inp-phone-paid">
                             <span class="checkmark"></span>
                         </label>
@@ -108,7 +109,7 @@
                             <span class="checkmark"></span>
                         </label>
                         <label class="field check-container">
-                            Betalt frokost
+                            Betalt frokostordning
                             <input type="checkbox" name="betalt-frokost" id="inp-lunch-paid">
                             <span class="checkmark"></span>
                         </label>
@@ -118,9 +119,9 @@
                             <span class="checkmark"></span>
                         </label>
                     </div>
-                    <label for="" class="submit">
+                    <div for="" class="submit">
                         <input type="submit" value="Se din Lön" class="submit-job">
-                    </label>
+                    </div>
                 </form>
             </div>
 
