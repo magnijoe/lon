@@ -30,6 +30,8 @@
             <div class="logo-container">
                 <img src="brand/lon.svg" alt="Lön">
             </div>
+
+            <!-- Nav            
             <nav class="primary-nav flex-center">
                 <a href="#" class="nav-elm">Beregn</a>
                 <a href="#" class="nav-elm">Info</a>
@@ -40,7 +42,8 @@
                 <a href="#" class="nav-user">
                     <img src="https://variety.com/wp-content/uploads/2021/04/Avatar.jpg?w=800&h=533&crop=1" alt="User Avatar">
                 </a>
-            </nav>
+            </nav> 
+            -->
         </header>
 
         <div class="container">
@@ -53,10 +56,11 @@
                     <div class="row flex-center">
                         <div class="field">
                             <input required type="text" name="name" id="inp-name" placeholder=" ">
-                            <label class ="placeholder" for="name">Job/titel</label>
+                            <label class ="placeholder" for="inp-name">Job/titel</label>
                         </div>
-                        <div for="Løn" class="field" id="lon">
-                            <input required maxlength="11" type="tel" name="Løn" id="inp-lon" placeholder="Løn..." class="format-input">
+                        <div class="field" id="lon">
+                            <input required maxlength="11" type="tel" name="Løn" id="inp-lon" placeholder=" " class="format-input">
+                            <label class ="placeholder" for="inp-lon">Løn</label>
                             <label class="toggle-container">
                                 <div class="description-container flex-center">
                                     <div class="description">/mnd</div>
@@ -68,19 +72,22 @@
                                 </div>
                             </label>
                         </div>
-                        <div for="Pension" class="field" id="pension">
-                            <input required type="number" name="pension" id="inp-pension" placeholder="Pension...">
+                        <div class="field" id="pension">
+                            <input required type="number" name="pension" id="inp-pension" placeholder=" ">
+                            <label class ="placeholder" for="inp-pension">Pension</label>
                             <span class="meta">%</span>
                         </div>
                     </div>
 
                     <div class="row flex-center">
-                        <div for="Fritvalgskonto" class="field" id="fritvalg">
-                            <input type="number" name="fritvalg" id="inp-fritvalg" placeholder="Fritvalgskonto...">
+                        <div class="field" id="fritvalg">
+                            <input type="number" name="fritvalg" id="inp-fritvalg" placeholder=" ">
+                            <label class ="placeholder" for="inp-fritvalg">Fritvalg</label>
                             <span class="meta">%</span>
                         </div>
-                        <div for="Bonus/provision" class="field" id="bonus">
-                            <input type="text" name="bonus" id="inp-bonus" placeholder="Bonus/provision..." class="format-input">
+                        <div class="field" id="bonus">
+                            <input type="text" name="bonus" id="inp-bonus" placeholder=" " class="format-input">
+                            <label class ="placeholder" for="inp-bonus">Bonus</label>
                             <label class="toggle-container">
                                 <div class="description-container flex-center">
                                     <div class="description">/mnd</div>
@@ -92,8 +99,9 @@
                                 </div>
                             </label>
                         </div>
-                        <div for="Timer" class="field">
-                            <input required type="number" name="timer" id="inp-hours" placeholder="Antal timer...">
+                        <div class="field">
+                            <input required type="number" name="timer" id="inp-hours" placeholder=" ">
+                            <label class ="placeholder" for="inp-hours">Timer</label>
                             <span class="meta">/u</span>
                         </div>
                     </div>
@@ -119,7 +127,7 @@
                             <span class="checkmark"></span>
                         </label>
                     </div>
-                    <div for="" class="submit">
+                    <div class="submit">
                         <input type="submit" value="Se din Lön" class="submit-job">
                     </div>
                 </form>
@@ -145,30 +153,6 @@
                 </div>
                 <div class="jobs-wrap">
                     <div class="jobs-grid jobs-container">
-                        <div class="empty">X</div>
-                        <div class="job">Virksomhed A</div>
-                        <div class="pension">8 %</div>
-                        <div class="fritvalg">4 %</div>
-                        <div class="phone center">
-                            <label class="check-container">
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="internet center">
-                            <label class="check-container">
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="lunch center">
-                            <label class="check-container">
-                                <input type="checkbox"">
-                                <span class="checkmark"></span>
-                            </label>
-                        </div>
-                        <div class="pay">480.000 <span>DKK</span></div>
-                        <div class="pay-gross right">492.000 <span>DKK</span></div>
                     </div>
                 </div>
             </div>
@@ -179,5 +163,8 @@
 
         
         <script src="scripts.js" async defer></script>
+        <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+
     </body>
 </html>
